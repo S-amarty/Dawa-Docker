@@ -1,0 +1,14 @@
+version: "3.9"
+
+services:
+  replication-client:
+    build:
+      context: replication-client
+    image: dawadk-replication-client:local
+    env_file:
+      - .env
+    environment:
+      - DATABASE_URL=postgres://${LOCAL_DB_USER}:${LOCAL_DB_PASSWORD}@${LOCAL_DB_HOST}:${LOCAL_DB_PORT}/${LOCAL_DB_NAME}
+      - REPLICATOR_SYNC_PERIOD=${REPLICATOR_SYNC_PERIOD}
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
